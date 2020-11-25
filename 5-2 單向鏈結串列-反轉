@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+class ListNode
+{
+public:
+	ListNode(int a) { data = a; link = 0; }
+private:
+	int data;
+	ListNode *link;
+	friend class LinkedList;
+};
+
+class LinkedList
+{
+private:
+	ListNode *first;
+	ListNode *last;
+public:
+	LinkedList() {
+		first = 0;
+		last = 0;
+	}
+	void InsertFirst(int x) {
+		ListNode *temp = new ListNode(x);
+		temp->link = first;
+		first = temp;
+	}
+	void InsertLast(int x) {
+		ListNode *temp = new ListNode(x);
+		
+		if (first == 0) 
+			first = temp;
+		else {
+			ListNode *current = first;
+			while (current->link != NULL) {
+				current = current->link;
+			}
+			current->link = temp;
+		}
+	}
+	int DeleteFirst() {
+		ListNode *temp = first;
+		first = temp->link;
+		return temp->data;
+	}
+	int DeleteLast() {
+		ListNode *temp = first;
+		while ((temp->link)->link != NULL) {
+			temp = temp->link;
+		}
+		temp->link = NULL;
+		return temp->data;
+	}
+	void PrintList() {
+		ListNode *temp = first;
+		while (temp->link != NULL) {
+			cout << temp->data << " ";
+			temp = temp->link;
+		}
+		cout << temp->data << endl;
+	}
+	void Reverse() {
+		ListNode *forward = first;
+		ListNode *current = NULL;
+		ListNode *prev = NULL;
+
+		while (forward->link != NULL) { //口1->口2->口3
+			prev = current;			//p=0			p=口1
+			current = forward;		//c=口1			c=口2
+			forward = forward->link;	//f(口1)=口2		f(口2)=口3
+			current->link = prev;		//cL=p(0)		cL=p(口1)
+		}
+		forward->link = current;		//口3=口2
+		first = forward;				
+	}
+};
+
+int main(int argc, char *argv[])
+{
+	LinkedList list;
+	int times, input;
+	for (cin >> times; times > 0; times--) { cin >> input; list.InsertFirst(input); }
+	list.PrintList();
+	list.Reverse();
+	list.PrintList();
+}
