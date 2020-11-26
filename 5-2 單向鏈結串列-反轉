@@ -1,17 +1,17 @@
 #include <iostream>
 using namespace std;
-class ListNode
-{
+class ListNode{
 public:
-	ListNode(int a) { data = a; link = 0; }
+	ListNode(int a) { 
+		data = a; link = 0; 
+	}
 private:
 	int data;
 	ListNode *link;
 	friend class LinkedList;
 };
 
-class LinkedList
-{
+class LinkedList{
 private:
 	ListNode *first;
 	ListNode *last;
@@ -27,8 +27,8 @@ public:
 	}
 	void InsertLast(int x) {
 		ListNode *temp = new ListNode(x);
-		
-		if (first == 0) 
+
+		if (first == 0)
 			first = temp;
 		else {
 			ListNode *current = first;
@@ -48,39 +48,39 @@ public:
 		while ((temp->link)->link != NULL) {
 			temp = temp->link;
 		}
+		int x = (temp->link)->data;
 		temp->link = NULL;
-		return temp->data;
+		return x;
 	}
 	void PrintList() {
 		ListNode *temp = first;
-		while (temp->link != NULL) {
+		while (temp != NULL) {
 			cout << temp->data << " ";
 			temp = temp->link;
 		}
-		cout << temp->data << endl;
+		cout << endl;
 	}
 	void Reverse() {
 		ListNode *forward = first;
 		ListNode *current = NULL;
 		ListNode *prev = NULL;
 
-		while (forward->link != NULL) { //口1->口2->口3
-			prev = current;			//p=0			p=口1
-			current = forward;		//c=口1			c=口2
-			forward = forward->link;	//f(口1)=口2		f(口2)=口3
-			current->link = prev;		//cL=p(0)		cL=p(口1)
+		while (forward->link != NULL) {
+			prev = current;
+			current = forward;
+			forward = forward->link;
+			current->link = prev;
 		}
-		forward->link = current;		//口3=口2
-		first = forward;				
+		forward->link = current;
+		first = forward;
 	}
 };
 
-int main(int argc, char *argv[])
-{
-	LinkedList list;
-	int times, input;
-	for (cin >> times; times > 0; times--) { cin >> input; list.InsertFirst(input); }
-	list.PrintList();
+int main(int argc, char *argv[]){
+    LinkedList list;
+    int times, input;
+    for(cin >> times; times > 0; times--) {cin >> input; list.InsertFirst(input);}
+    list.PrintList();
 	list.Reverse();
-	list.PrintList();
+    list.PrintList();
 }
