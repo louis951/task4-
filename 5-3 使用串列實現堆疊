@@ -1,17 +1,17 @@
 #include <iostream>
 using namespace std;
-class ListNode
-{
+class ListNode{
 public:
-	ListNode(int a) { data = a; link = 0; }
+	ListNode(int a) { 
+		data = a; link = 0; 
+	}
 private:
 	int data;
 	ListNode *link;
 	friend class LinkedList;
 };
 
-class LinkedList
-{
+class LinkedList{
 private:
 	ListNode *first;
 	ListNode *last;
@@ -27,8 +27,8 @@ public:
 	}
 	void InsertLast(int x) {
 		ListNode *temp = new ListNode(x);
-		
-		if (first == 0) 
+
+		if (first == 0)
 			first = temp;
 		else {
 			ListNode *current = first;
@@ -48,37 +48,38 @@ public:
 		while ((temp->link)->link != NULL) {
 			temp = temp->link;
 		}
+		int x = (temp->link)->data;
 		temp->link = NULL;
-		return temp->data;
+		return x;
 	}
 	void PrintList() {
 		ListNode *temp = first;
-		while (temp->link != NULL) {
+		while (temp != NULL) {
 			cout << temp->data << " ";
 			temp = temp->link;
 		}
-		cout << temp->data << endl;
+		cout << endl;
 	}
 	void Reverse() {
 		ListNode *forward = first;
 		ListNode *current = NULL;
 		ListNode *prev = NULL;
 
-		while (forward->link != NULL) { 
-			prev = current;			
-			current = forward;		
-			forward = forward->link;	
-			current->link = prev;		
+		while (forward->link != NULL) {
+			prev = current;
+			current = forward;
+			forward = forward->link;
+			current->link = prev;
 		}
-		forward->link = current;		
+		forward->link = current;
 		first = forward;
 	}
 };
 class Stack {
 public:
 	LinkedList list;
-	Stack(){
-		
+	Stack() {
+
 	}
 	void Push(int x) {
 		list.InsertLast(x);
@@ -90,8 +91,7 @@ public:
 		list.PrintList();
 	}
 };
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	Stack stack;
 	int times, input;
 	for (cin >> times; times > 0; times--) { cin >> input; stack.Push(input); }
