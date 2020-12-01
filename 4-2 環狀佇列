@@ -2,27 +2,24 @@
 using namespace std;
 class Queue {
 private:
-	int arr[10] = {};
+	int arr[10];
 	int rear = 0;
 	int front = 0;
-public:	
+public:
 	void Enqueue(int x) {
-		rear++;
-		if (rear > 9)
-			rear = 0;
+		rear = (rear + 1) % 10;
 		arr[rear] = x;
 	}
 	void Dequeue() {
-		front++;
+		front = (front + 1) % 10;
 	}
 	void PrintQueue() {
-		for (int i = (front + 1); i != ((rear + 1) % 10); i++) {
-			if (i % 10 == 0)
-				i = 0;
+		for (int i = front; i != rear;) {
+			i = (i + 1) % 10;
 			cout << arr[i] << " ";
 		}
 		cout << "rear:" << rear << " front:" << front << endl;
-	}
+	}	
 };
 int main(int argc, char *argv[]){
 	Queue queue;
