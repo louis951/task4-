@@ -2,10 +2,10 @@
 using namespace std;
 class Queue {
 private:
-	int arr[10] = {};
+	int arr[10];
 	int rear = -1;
 	int front = -1;
-public:	
+public:
 	void Enqueue(int x) {
 		arr[++rear] = x;
 	}
@@ -13,7 +13,7 @@ public:
 		front++;
 	}
 	void PrintQueue() {
-		for (int i = ++front; i <= rear; i++)
+		for (int i = (front + 1); i <= rear; i++)
 			cout << arr[i] << " ";
 	}
 };
