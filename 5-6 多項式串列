@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class ListNode{
+public:
+	ListNode(int a, int b) { coef = a; exp = b; link = 0; }
+private:
+	int coef;
+	int exp;
+	ListNode *link;
+	friend class PolyList;
+};
+
+class PolyList{
+public:
+	void InsertLast(int, int);
+	void Add(PolyList&);
+	void PrintList();
+private:
+	ListNode *first = 0;
+	ListNode *last = 0;
+};
+
+void PolyList::InsertLast(int coef, int exp) {
+	ListNode *newNode = new ListNode(coef, exp);
+	if (last == 0)
+		first = newNode;
+	else
+		last->link = newNode;
+	last = newNode;
+}
+
+void PolyList::Add(PolyList& b){
+	ListNode *A = first;
+	ListNode *B = b.first;
+	PolyList *C = new PolyList();
+	while (A != 0 && B != 0) {
+		if(A->exp == B->exp) {
+			C->InsertLast((A->coef + B->coef), A->exp);
+			A = A->link;
+			B = B->link;
+		}
+		else if (A->exp < B->exp) {
+			C->InsertLast(B->coef, B->exp);
+			B = B->link;
+		}
+		else if (A->exp > B->exp) {
+			C->InsertLast(A->coef, A->exp);
+			A = A->link;
+		}
+	}
+	while (A != 0) {
+		C->InsertLast(A->coef, A->exp);
+		A = A->link;
+	}
+	while (B != 0) {
+		C->InsertLast(B->coef, B->exp);
+		B = B->link;
+	}
+	first = C->first;
+}
+
+void PolyList::PrintList(){
+	ListNode *A = first;
+	while (A != 0) {
+		cout << A->coef << "x^" << A->exp << " ";
+		A = A->link;
+	}
+}
+
+int main(int argc, char *argv[]){
+	PolyList A, B;
+	int times, input, input2;
+	for (cin >> times, times /= 2; times > 0; times--) { cin >> input >> input2; A.InsertLast(input, input2); }
+	for (cin >> times, times /= 2; times > 0; times--) { cin >> input >> input2; B.InsertLast(input, input2); }
+	A.Add(B);
+	A.PrintList();
+}
