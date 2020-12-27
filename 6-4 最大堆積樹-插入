@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+class MaxHeap {
+public:
+	int arr[100]; 
+	int tail;
+	MaxHeap() {
+		for (int i = 0; i < 100; i++)
+			arr[i] = 0;
+		tail = 1;
+	}
+	void Insert(int x) {
+		if (arr[1] == 0) {
+			arr[1] = x;
+			tail++;
+		}
+		else {
+			arr[tail] = x;
+			int a = 0;
+			for (int i = tail; i != 0; i /= 2) {
+				if (i / 2 != 0 && arr[i] > arr[i / 2]) {
+					a = arr[i];
+					arr[i] = arr[i / 2];
+					arr[i / 2] = a;
+				}
+			}
+			tail++;
+		}
+	}
+	void Print() {
+		for (int i = 1; i < tail; i++)
+			cout << arr[i] << " ";
+	}
+};
+int main(int argc, char *argv[])
+{
+	MaxHeap tree1;
+	int times, input;
+	for (cin >> times; times > 0; times--) { cin >> input; tree1.Insert(input); }
+	tree1.Print();
+}
